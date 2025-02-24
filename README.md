@@ -1,6 +1,6 @@
 <a href="https://softserve.academy/">
   <div align="center">
-    <img src="https://github.com/project-studying-dotnet/Streetcode-Server-September/blob/main/StreetCodeLogo.jpg" 
+    <img src="https://github.com/project-studying-dotnet/Streetcode-Server-February/blob/main/StreetCodeLogo.jpg" 
         title="SoftServe IT Academy" 
         alt="SoftServe IT Academy">
   </div>
@@ -9,9 +9,12 @@
 # Streetcode
 
 This is a front-end part of our Streetcode project.
-Back-end part: https://github.com/ita-social-projects/StreetCode.git.
+Back-end part: https://github.com/project-studying-dotnet/Streetcode-Server-February.
 
-[![Coverage Status](https://img.shields.io/gitlab/coverage/ita-social-projects/StreetCode/master?style=flat-square)](https://coveralls.io) [![Github Issues](https://img.shields.io/github/issues/ita-social-projects/StreetCode?style=flat-square)](https://github.com/ita-social-projects/StreetCode/issues) [![Pending Pull-Requests](https://img.shields.io/github/issues-pr/ita-social-projects/StreetCode?style=flat-square)](https://github.com/ita-social-projects/StreetCode/pulls) [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+[![Coverage Status](https://img.shields.io/gitlab/coverage/project-studying-dotnet/Streetcode-Client-February/master?style=flat-square)](https://coveralls.io)
+[![Github Issues](https://img.shields.io/github/issues/project-studying-dotnet/Streetcode-Client-February?style=flat-square)](https://github.com/project-studying-dotnet/Streetcode-Client-February/issues)
+[![Pending Pull-Requests](https://img.shields.io/github/issues-pr/project-studying-dotnet/Streetcode-Client-February?style=flat-square)](https://github.com/project-studying-dotnet/Streetcode-Client-February/pulls)
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
 ---
 
@@ -39,7 +42,7 @@ Back-end part: https://github.com/ita-social-projects/StreetCode.git.
 ## Installation
 
 First of all, make sure you have installed dependencies below and back-end part of project from: 
-https://github.com/ita-social-projects/Streetcode-Admin.git.
+https://github.com/project-studying-dotnet/Streetcode-Server-February.git.
 
 ### Required to install
 * NodeJS (16.0.0) or higher
@@ -50,7 +53,7 @@ https://github.com/ita-social-projects/Streetcode-Admin.git.
 
 Clone this repo to your local machine using: 
 ```
-git clone https://github.com/ita-social-projects/Streetcode-Admin.git
+git clone https://github.com/project-studying-dotnet/Streetcode-Client-February.git
 ```
 
 ### Setup
@@ -76,7 +79,7 @@ If you had this page already opened, just reload it.
 ---
 
 ## Documentation
-Learn more about our documentation <a href="https://github.com/ita-social-projects/Streetcode-Admin.git/wiki" target="_blank">*here*</a>.
+Learn more about our documentation <a href="https://github.com/project-studying-dotnet/Streetcode-Client-February.git/wiki" target="_blank">*here*</a>.
 
 ---
 
@@ -112,7 +115,7 @@ For example, `fix typo` or `increase rate limit`. Note: you don't need to commit
 
 #### Step 6
 
-- 🔃 Create a new pull request using <a href="https://github.com/ita-social-projects/StreetCode_Client/pulls" target="_blank">*this link*</a>.
+- 🔃 Create a new pull request using <a href="https://github.com/project-studying-dotnet/Streetcode-Client-February/pulls" target="_blank">*this link*</a>.
 
 #### Step 7
 
@@ -141,7 +144,7 @@ Some fixes will be needed due to the nature of Gitflow. You would have to do a '
 - :dancer: Once it’s complete, the Hotfix is merged with the `developer` branch.
 
 ### Issue flow
-Find issues to work on <a href="https://github.com/orgs/ita-social-projects/projects/21" target="_blank">*here*</a>.
+Find issues to work on <a href="https://github.com/orgs/project-studying-dotnet/projects/18" target="_blank">*here*</a>.
 
 ---
 
