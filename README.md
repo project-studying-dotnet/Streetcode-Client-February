@@ -16,6 +16,11 @@ Back-end part: https://github.com/project-studying-dotnet/Streetcode-Server-Febr
 [![Pending Pull-Requests](https://img.shields.io/github/issues-pr/project-studying-dotnet/Streetcode-Client-February?style=flat-square)](https://github.com/project-studying-dotnet/Streetcode-Client-February/pulls)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=project-studying-dotnet_Streetcode-Client-February&metric=bugs)](https://sonarcloud.io/summary/new_code?id=project-studying-dotnet_Streetcode-Client-February)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=project-studying-dotnet_Streetcode-Client-February&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=project-studying-dotnet_Streetcode-Client-February)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=project-studying-dotnet_Streetcode-Client-February&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=project-studying-dotnet_Streetcode-Client-February)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=project-studying-dotnet_Streetcode-Client-February&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=project-studying-dotnet_Streetcode-Client-February)
+---
 ---
 
 ## Table of Contents
