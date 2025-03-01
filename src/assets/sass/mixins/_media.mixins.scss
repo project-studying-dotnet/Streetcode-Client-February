@@ -1,5 +1,9 @@
-@use "@assets/sass/_utils.functions.scss" as f;
-@use "@assets/sass/mixins/_vendor.mixins.scss" as vnd;
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:string";
+@use "../utils.functions" as f;
+@use "./_vendor.mixins.scss" as vnd;
 
 /*
 Ex.
@@ -41,19 +45,19 @@ $breakpoints: (
 $media-direction: max !default;
 
 @mixin css-property($property, $value) {
-  @if type-of($value) == string {
-    #{$property}: unquote($value);
+  @if meta.type-of($value) == string {
+    #{$property}: string.unquote($value);
   } @else {
     #{$property}: $value;
   }
 }
 
 @function split-limits($string, $separator) {
-  $string: inspect(quote($string));
-  $sep-id: str-index(quote($string), $separator);
+  $string: meta.inspect(string.quote($string));
+  $sep-id: string.index(string.quote($string), $separator);
 
   @if $sep-id {
-    $array: (quote(str-slice($string, 0, $sep-id - 1)), quote(str-slice($string, $sep-id + 1)));
+    $array: (string.quote(string.slice($string, 0, $sep-id - 1)), string.quote(string.slice($string, $sep-id + 1)));
     @return $array;
   }
   @return $string;
@@ -65,20 +69,20 @@ $media-direction: max !default;
   $separator: '-'
 ) {
   @each $property, $value in $properties {
-    @if type-of($value) == 'map' {
+    @if meta.type-of($value) == 'map' {
       @each $screen, $val in $value {
         $screen: split-limits(#{$screen}, $separator);
 
-        @if type-of($screen) == 'list' {
-          $left-limit: f.str-replace(nth($screen, 1), '"');
-          $right-limit: f.str-replace(nth($screen, 2), '"');
+        @if meta.type-of($screen) == 'list' {
+          $left-limit: f.str-replace(list.nth($screen, 1), '"');
+          $right-limit: f.str-replace(list.nth($screen, 2), '"');
 
           @if ($left-limit == min or $left-limit == max) {
             $media-direction: $left-limit;
 
             @if $orientation {
-              @if map-has-key($breakpoints, $right-limit) {
-                @media only screen and (#{$media-direction}-width: map-get($breakpoints, $right-limit) + 'px'
+              @if map.has-key($breakpoints, $right-limit) {
+                @media only screen and (#{$media-direction}-width: map.get($breakpoints, $right-limit) + 'px'
                                    and (orientation: $orientation)) {
                   @include css-property($property, $val);
                 }
@@ -88,8 +92,8 @@ $media-direction: max !default;
                 }
               }
             } @else {
-              @if map-has-key($breakpoints, $right-limit) {
-                @media only screen and (#{$media-direction}-width: map-get($breakpoints, $right-limit) + 'px') {
+              @if map.has-key($breakpoints, $right-limit) {
+                @media only screen and (#{$media-direction}-width: map.get($breakpoints, $right-limit) + 'px') {
                   @include css_property($property, $val);
                 }
               } @else {
@@ -100,21 +104,21 @@ $media-direction: max !default;
             }
           } @else {
             @if $orientation {
-              @if map-has-key($breakpoints, $left-limit) and map-has-key($breakpoints, $right-limit) {
-                @media only screen and (min-width: map-get($breakpoints, $left-limit) + 'px')
-                                   and (max-width: map-get($breakpoints, $right-limit) + 'px')
+              @if map.has-key($breakpoints, $left-limit) and map.has-key($breakpoints, $right-limit) {
+                @media only screen and (min-width: map.get($breakpoints, $left-limit) + 'px')
+                                   and (max-width: map.get($breakpoints, $right-limit) + 'px')
                                    and (orientation: $orientation) {
                   @include css_property($property, $val);
                 }
-              } @else if map-has-key($breakpoints, $left-limit) and not map-has-key($breakpoints, $right-limit) {
-                @media only screen and (min-width: map-get($breakpoints, $left-limit) + 'px')
+              } @else if map.has-key($breakpoints, $left-limit) and not map.has-key($breakpoints, $right-limit) {
+                @media only screen and (min-width: map.get($breakpoints, $left-limit) + 'px')
                                    and (max-width: $right-limit + 'px')
                                    and (orientation: $orientation) {
                   @include css_property($property, $val);
                 }
-              } @else if not map-has-key($breakpoints, $left-limit) and map-has-key($breakpoints, $left-limit) {
+              } @else if not map.has-key($breakpoints, $left-limit) and map.has-key($breakpoints, $left-limit) {
                 @media only screen and (min-width: $left-limit + 'px')
-                                   and (max-width: map-get($breakpoints, $right-limit) + 'px')
+                                   and (max-width: map.get($breakpoints, $right-limit) + 'px')
                                    and (orientation: $orientation) {
                   @include css_property($property, $val);
                 }
@@ -125,19 +129,19 @@ $media-direction: max !default;
                 }
               }
             } @else {
-              @if map-has-key($breakpoints, $left-limit) and map-has-key($breakpoints, $right-limit) {
-                @media only screen and (min-width: map-get($breakpoints, $left-limit) + 'px')
-                                   and (max-width: map-get($breakpoints, $right-limit) + 'px') {
+              @if map.has-key($breakpoints, $left-limit) and map.has-key($breakpoints, $right-limit) {
+                @media only screen and (min-width: map.get($breakpoints, $left-limit) + 'px')
+                                   and (max-width: map.get($breakpoints, $right-limit) + 'px') {
                   @include css_property($property, $val);
                 }
-              } @else if map-has-key($breakpoints, $left-limit) and not map-has-key($breakpoints, $right-limit) {
-                @media only screen and (min-width: map-get($breakpoints, $left-limit) + 'px')
+              } @else if map.has-key($breakpoints, $left-limit) and not map.has-key($breakpoints, $right-limit) {
+                @media only screen and (min-width: map.get($breakpoints, $left-limit) + 'px')
                                    and (max-width: $right-limit + 'px') {
                   @include css_property($property, $val);
                 }
-              } @else if not map-has-key($breakpoints,  $left-limit) and map-has-key($breakpoints,  $right-limit) {
+              } @else if not map.has-key($breakpoints,  $left-limit) and map.has-key($breakpoints,  $right-limit) {
                 @media only screen and (min-width: $left-limit + 'px')
-                                   and (max-width: map-get($breakpoints, $right-limit) + 'px') {
+                                   and (max-width: map.get($breakpoints, $right-limit) + 'px') {
                   @include css_property($property, $val);
                 }
               } @else {
@@ -151,8 +155,8 @@ $media-direction: max !default;
           $screen: f.str-replace($screen, '"');
 
           @if $orientation {
-            @if map-has-key($breakpoints, $screen) {
-              @media only screen and (#{$media-direction}-width: map-get($breakpoints, $screen) + 'px')
+            @if map.has-key($breakpoints, $screen) {
+              @media only screen and (#{$media-direction}-width: map.get($breakpoints, $screen) + 'px')
                                  and (orientation: $orientation) {
                 @include css_property($property, $val);
               }
@@ -168,8 +172,8 @@ $media-direction: max !default;
               }
             }
           } @else {
-            @if map-has-key($breakpoints, $screen) {
-              @media only screen and (#{$media-direction}-width: map-get($breakpoints, $screen) + 'px') {
+            @if map.has-key($breakpoints, $screen) {
+              @media only screen and (#{$media-direction}-width: map.get($breakpoints, $screen) + 'px') {
                 @include css_property($property, $val);
               }
             } @else {
