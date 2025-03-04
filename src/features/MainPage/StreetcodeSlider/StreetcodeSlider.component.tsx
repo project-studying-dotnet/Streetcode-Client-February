@@ -1,11 +1,11 @@
 import './StreetcodeSlider.styles.scss';
-import StreetcodeSliderItem from './StreetcodeSliderItem/StreetcodeSliderItem.component';
+import StreetcodeSliderItem from '@/features/MainPage/StreetcodeSlider/StreetcodeSliderItem/StreetcodeSliderItem.component';
 
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { StreetcodeMainPage } from '@/models/streetcode/streetcode-types.model';
 import StreetcodesApi from '@/app/api/streetcode/streetcodes.api';
-import SlickSlider from './../../SlickSlider/SlickSlider.component';
+import SlickSlider from '@/features/SlickSlider/SlickSlider.component';
 
 const shuffleArray = (array: any) => {
     const shuffledArray = [...array];
