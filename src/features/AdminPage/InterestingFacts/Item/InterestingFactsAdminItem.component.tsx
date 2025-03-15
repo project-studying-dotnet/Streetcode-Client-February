@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { Input, Form, Upload, message, Button } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import './InterestingFactsAdminItem.styles.scss';
@@ -27,6 +27,14 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     const [descriptionCount, setDescriptionCount] = useState(description.length);
     const [altCount, setAltCount] = useState(imageAlt?.length || 0);
     const [submitting, setSubmitting] = useState(false);
+
+    // Reset form when props change (new fact vs edit fact)
+    useEffect(() => {
+        form.resetFields();
+        setTitleCount(title.length);
+        setDescriptionCount(description.length);
+        setAltCount(imageAlt?.length || 0);
+    }, [title, description, imageUrl, imageAlt, form]);
 
     const handleImageUpload = (info: any) => {
         if (info.file.status === 'done') {
@@ -63,6 +71,7 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             layout="vertical"
             initialValues={{ title, description, imageUrl, imageAlt }}
             className="interesting-facts-form"
+            preserve={false}
         >
             <Form.Item
                 label="Title"

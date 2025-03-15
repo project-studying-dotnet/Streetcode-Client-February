@@ -14,6 +14,13 @@ interface InterestingFact {
     imageAlt?: string;
 }
 
+const EMPTY_FACT = {
+    title: '',
+    description: '',
+    imageUrl: undefined,
+    imageAlt: undefined,
+};
+
 const InterestingFactsAdminBlock: FC = () => {
     const [facts, setFacts] = useState<InterestingFact[]>([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -60,6 +67,11 @@ const InterestingFactsAdminBlock: FC = () => {
             };
             setFacts([...facts, newFact]);
         }
+        setIsModalVisible(false);
+        setEditingFact(null);
+    };
+
+    const handleModalClose = () => {
         setIsModalVisible(false);
         setEditingFact(null);
     };
@@ -117,8 +129,9 @@ const InterestingFactsAdminBlock: FC = () => {
             <Modal
                 title={editingFact ? "Edit Fact" : "Add New Fact"}
                 open={isModalVisible}
-                onCancel={() => setIsModalVisible(false)}
+                onCancel={handleModalClose}
                 footer={null}
+                destroyOnClose
             >
                 <InterestingFactsAdminItem
                     title={editingFact?.title || ''}
