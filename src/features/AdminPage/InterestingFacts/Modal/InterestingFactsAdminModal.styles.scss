@@ -1,0 +1,49 @@
+.interesting-facts-modal {
+    margin-bottom: 16px;
+    border: 1px solid #f0f0f0;
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .interesting-facts-modal-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .interesting-facts-modal-text {
+        flex: 1;
+        min-width: 0;
+
+        h5.ant-typography {
+            margin-bottom: 8px;
+            margin-top: 0;
+        }
+
+        .ant-typography {
+            display: block;
+            color: rgba(0, 0, 0, 0.45);
+        }
+    }
+
+    .interesting-facts-modal-actions {
+        display: flex;
+        gap: 8px;
+        flex-shrink: 0;
+
+        .edit-button {
+            color: #1890ff;
+        }
+
+        .delete-button {
+            color: #ff4d4f;
+        }
+
+        .anticon {
+            font-size: 16px;
+        }
+    }
+} 

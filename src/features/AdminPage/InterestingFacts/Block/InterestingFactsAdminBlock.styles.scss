@@ -1,0 +1,51 @@
+.interesting-facts-admin-block {
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .interesting-facts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+
+        h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 500;
+        }
+    }
+
+    .facts-list {
+        min-height: 100px;
+        padding: 8px 0;
+    }
+
+    .ant-modal {
+        .ant-modal-body {
+            padding: 24px;
+        }
+    }
+
+    // Drag and drop styles
+    [data-rbd-draggable-context-id] {
+        margin-bottom: 16px;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    [data-rbd-drag-handle-draggable-id] {
+        cursor: move;
+    }
+
+    // Dragging styles
+    [data-rbd-draggable-context-id][data-rbd-is-dragging="true"] {
+        .interesting-facts-modal {
+            background-color: #fafafa;
+            opacity: 0.8;
+        }
+    }
+} 

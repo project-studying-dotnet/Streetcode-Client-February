@@ -9,6 +9,7 @@ import PartnersPage from '@/features/AdditionalPages/PartnersPage/Partners.compo
 import AdminPage from '@/features/AdminPage/AdminPage.component';
 import Partners from '@/features/AdminPage/PartnersPage/Partners.component';
 import TeamPage from '@/features/AdminPage/TeamPage/TeamPage.component';
+import InterestingFactsMainPage from '@/features/AdminPage/InterestingFacts/InterestingFactsMainPage.component';
 import StreetcodeCatalog from '@/features/StreetcodeCatalogPage/StreetcodeCatalog.component';
 import NewsPage from '@/features/AdditionalPages/NewsPage/News.component';
 import ContactUs from '@/features/AdditionalPages/ContactUsPage/ContanctUs.component';
@@ -33,6 +34,10 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route
             path={FRONTEND_ROUTES.ADMIN.PARTNERS}
             element={<Partners />}
+        />
+        <Route
+            path={FRONTEND_ROUTES.ADMIN.WOW_FACTS}
+            element={<InterestingFactsMainPage />}
         />
         <Route path={FRONTEND_ROUTES.OTHER_PAGES.CATALOG} element={<StreetcodeCatalog />} />
         <Route
