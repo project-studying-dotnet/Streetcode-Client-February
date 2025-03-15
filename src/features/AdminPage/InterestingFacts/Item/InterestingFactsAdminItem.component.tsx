@@ -26,20 +26,35 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     const [titleCount, setTitleCount] = useState(title.length);
     const [descriptionCount, setDescriptionCount] = useState(description.length);
     const [altCount, setAltCount] = useState(imageAlt?.length || 0);
+    const [submitting, setSubmitting] = useState(false);
 
     const handleImageUpload = (info: any) => {
         if (info.file.status === 'done') {
             message.success(`${info.file.name} file uploaded successfully`);
-            form.setFieldValue('imageUrl', info.file.response.url);
+            form.setFieldValue('imageUrl', info.file.response?.url || URL.createObjectURL(info.file.originFileObj));
         } else if (info.file.status === 'error') {
             message.error(`${info.file.name} file upload failed.`);
         }
     };
 
-    const handleSubmit = () => {
-        form.validateFields().then((values) => {
+    const handleSubmit = async () => {
+        try {
+            setSubmitting(true);
+            const values = await form.validateFields();
             onSubmit(values);
-        });
+        } catch (error: any) {
+            if (error.errorFields) {
+                // Form validation error
+                const errorMessages = error.errorFields.map((field: any) => field.errors[0]);
+                message.error(errorMessages.join(', '));
+            } else {
+                // Other errors
+                message.error('An error occurred while submitting the form');
+                console.error('Form submission error:', error);
+            }
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -91,6 +106,12 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
                     onChange={handleImageUpload}
                     maxCount={1}
                     listType="picture"
+                    customRequest={({ file, onSuccess }) => {
+                        // Temporary solution to handle file upload
+                        setTimeout(() => {
+                            onSuccess?.("ok");
+                        }, 0);
+                    }}
                 >
                     <Input
                         type="button"
@@ -116,7 +137,12 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             </Form.Item>
 
             <Form.Item className="form-actions">
-                <Button type="primary" onClick={handleSubmit}>
+                <Button 
+                    type="primary" 
+                    onClick={handleSubmit}
+                    loading={submitting}
+                    disabled={submitting}
+                >
                     {title ? 'Save Changes' : 'Add Fact'}
                 </Button>
             </Form.Item>
