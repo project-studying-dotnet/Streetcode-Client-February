@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 import { Button, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import InterestingFactsAdminModal from '../Modal/InterestingFactsAdminModal.component';
 import InterestingFactsAdminItem from '../Item/InterestingFactsAdminItem.component';
+import StrictModeDroppable from '@/app/common/components/StrictModeDroppable';
 import './InterestingFactsAdminBlock.styles.scss';
 
 interface InterestingFact {
@@ -32,6 +33,8 @@ const InterestingFactsAdminBlock: FC = () => {
         const items = Array.from(facts);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
+
+        console.log(`modal with title "${reorderedItem.title}" moved to position ${result.destination.index + 1}`);
 
         setFacts(items);
     };
@@ -90,7 +93,7 @@ const InterestingFactsAdminBlock: FC = () => {
             </div>
 
             <DragDropContext onDragEnd={handleDragEnd}>
-                <Droppable droppableId="facts">
+                <StrictModeDroppable droppableId="facts">
                     {(provided) => (
                         <div
                             {...provided.droppableProps}
@@ -124,7 +127,7 @@ const InterestingFactsAdminBlock: FC = () => {
                             {provided.placeholder}
                         </div>
                     )}
-                </Droppable>
+                </StrictModeDroppable>
             </DragDropContext>
 
             <Modal

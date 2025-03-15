@@ -22,10 +22,6 @@ const InterestingFactsAdminModal: FC<InterestingFactsAdminModalProps> = ({
     onEdit,
     onDelete,
 }) => {
-    const truncatedDescription = description.length > 100
-        ? `${description.substring(0, 100)}...`
-        : description;
-
     return (
         <Card className="interesting-facts-modal">
             <div className="interesting-facts-modal-content">
@@ -43,7 +39,7 @@ const InterestingFactsAdminModal: FC<InterestingFactsAdminModalProps> = ({
                 )}
                 <div className="interesting-facts-modal-text">
                     <Title level={5}>{title}</Title>
-                    <Text type="secondary">{truncatedDescription}</Text>
+                    <Text type="secondary">{description}</Text>
                 </div>
                 <div className="interesting-facts-modal-actions">
                     <Button
