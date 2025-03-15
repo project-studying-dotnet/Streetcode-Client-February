@@ -113,6 +113,7 @@ const InterestingFactsAdminBlock: FC = () => {
                                                 id={fact.id}
                                                 title={fact.title}
                                                 description={fact.description}
+                                                imageUrl={fact.imageUrl}
                                                 onEdit={handleEdit}
                                                 onDelete={handleDelete}
                                             />

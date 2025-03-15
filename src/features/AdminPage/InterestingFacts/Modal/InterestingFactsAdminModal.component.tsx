@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Card, Typography, Button } from 'antd';
+import { Card, Typography, Button, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './InterestingFactsAdminModal.styles.scss';
 
@@ -9,6 +9,7 @@ interface InterestingFactsAdminModalProps {
     id: number;
     title: string;
     description: string;
+    imageUrl?: string;
     onEdit: (id: number) => void;
     onDelete: (id: number) => void;
 }
@@ -17,6 +18,7 @@ const InterestingFactsAdminModal: FC<InterestingFactsAdminModalProps> = ({
     id,
     title,
     description,
+    imageUrl,
     onEdit,
     onDelete,
 }) => {
@@ -27,6 +29,18 @@ const InterestingFactsAdminModal: FC<InterestingFactsAdminModalProps> = ({
     return (
         <Card className="interesting-facts-modal">
             <div className="interesting-facts-modal-content">
+                {imageUrl && (
+                    <div className="interesting-facts-modal-image">
+                        <Image
+                            src={imageUrl}
+                            alt={title}
+                            preview={false}
+                            width={120}
+                            height={120}
+                            style={{ objectFit: 'cover' }}
+                        />
+                    </div>
+                )}
                 <div className="interesting-facts-modal-text">
                     <Title level={5}>{title}</Title>
                     <Text type="secondary">{truncatedDescription}</Text>
