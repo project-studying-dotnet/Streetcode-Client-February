@@ -144,7 +144,7 @@ const InterestingFactsAdminBlock: FC = () => {
                                                 id={fact.id}
                                                 title={fact.title}
                                                 description={fact.factContent}
-                                                imageUrl={fact.image?.base64}
+                                                imageId={fact.imageId}
                                                 onEdit={handleEdit}
                                                 onDelete={handleDelete}
                                             />
