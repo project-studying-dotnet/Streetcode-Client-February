@@ -1,42 +1,55 @@
-import { FC, useState } from 'react';
-import { Button, Modal } from 'antd';
+import { FC, useState, useEffect } from 'react';
+import { Button, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
 import InterestingFactsAdminModal from '../Modal/InterestingFactsAdminModal.component';
 import InterestingFactsAdminItem from '../Item/InterestingFactsAdminItem.component';
 import StrictModeDroppable from '@/app/common/components/StrictModeDroppable';
+import { Fact } from '@/models/streetcode/text-contents.model';
+import useMobx from '@/app/stores/root-store';
 import './InterestingFactsAdminBlock.styles.scss';
 
-interface InterestingFact {
-    id: number;
+interface InterestingFactsAdminItemValues {
     title: string;
     description: string;
     imageUrl?: string;
     imageAlt?: string;
 }
 
-const EMPTY_FACT = {
-    title: '',
-    description: '',
-    imageUrl: undefined,
-    imageAlt: undefined,
-};
-
 const InterestingFactsAdminBlock: FC = () => {
-    const [facts, setFacts] = useState<InterestingFact[]>([]);
+    const { factsStore } = useMobx();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [editingFact, setEditingFact] = useState<InterestingFact | null>(null);
+    const [editingFact, setEditingFact] = useState<Fact | null>(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchFacts = async () => {
+            setLoading(true);
+            try {
+                await factsStore.fetchAllFacts();
+            } catch (error) {
+                message.error('Failed to fetch facts');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchFacts();
+    }, []);
 
     const handleDragEnd = (result: any) => {
         if (!result.destination) return;
 
-        const items = Array.from(facts);
+        const items = Array.from(factsStore.getFactArray);
         const [reorderedItem] = items.splice(result.source.index, 1);
         items.splice(result.destination.index, 0, reorderedItem);
 
         console.log(`modal with title "${reorderedItem.title}" moved to position ${result.destination.index + 1}`);
-
-        setFacts(items);
+        
+        // Update the order in the store
+        items.forEach((item, index) => {
+            factsStore.updateFactInMap({ ...item, id: index + 1 });
+        });
     };
 
     const handleAdd = () => {
@@ -45,39 +58,54 @@ const InterestingFactsAdminBlock: FC = () => {
     };
 
     const handleEdit = (id: number) => {
-        const factToEdit = facts.find(fact => fact.id === id);
+        const factToEdit = factsStore.factMap.get(id);
         if (factToEdit) {
             setEditingFact(factToEdit);
             setIsModalVisible(true);
         }
     };
 
-    const handleDelete = (id: number) => {
-        setFacts(facts.filter(fact => fact.id !== id));
+    const handleDelete = async (id: number) => {
+        try {
+            await factsStore.deleteFact(id);
+            message.success('Fact deleted successfully');
+        } catch (error) {
+            message.error('Failed to delete fact');
+        }
     };
 
-    const handleSubmit = (values: Omit<InterestingFact, 'id'>) => {
-        if (editingFact) {
-            setFacts(facts.map(fact =>
-                fact.id === editingFact.id
-                    ? { ...fact, ...values }
-                    : fact
-            ));
-        } else {
-            const newFact = {
-                id: Date.now(),
-                ...values
-            };
-            setFacts([...facts, newFact]);
+    const transformValuesToFact = (values: InterestingFactsAdminItemValues): Omit<Fact, 'id'> => {
+        return {
+            title: values.title,
+            factContent: values.description,
+            imageId: 0, // This should be set when image is uploaded
+            image: undefined
+        };
+    };
+
+    const handleSubmit = async (values: InterestingFactsAdminItemValues) => {
+        try {
+            const factData = transformValuesToFact(values);
+            if (editingFact) {
+                await factsStore.updateFact({ ...editingFact, ...factData });
+                message.success('Fact updated successfully');
+            } else {
+                factsStore.addFact(factData as Fact);
+                message.success('Fact created successfully');
+            }
+            setIsModalVisible(false);
+            setEditingFact(null);
+        } catch (error) {
+            message.error(editingFact ? 'Failed to update fact' : 'Failed to create fact');
         }
-        setIsModalVisible(false);
-        setEditingFact(null);
     };
 
     const handleModalClose = () => {
         setIsModalVisible(false);
         setEditingFact(null);
     };
+
+    const facts = factsStore.getFactArray;
 
     return (
         <div className="interesting-facts-admin-block">
@@ -115,8 +143,8 @@ const InterestingFactsAdminBlock: FC = () => {
                                             <InterestingFactsAdminModal
                                                 id={fact.id}
                                                 title={fact.title}
-                                                description={fact.description}
-                                                imageUrl={fact.imageUrl}
+                                                description={fact.factContent}
+                                                imageUrl={fact.image?.base64}
                                                 onEdit={handleEdit}
                                                 onDelete={handleDelete}
                                             />
@@ -139,9 +167,9 @@ const InterestingFactsAdminBlock: FC = () => {
             >
                 <InterestingFactsAdminItem
                     title={editingFact?.title || ''}
-                    description={editingFact?.description || ''}
-                    imageUrl={editingFact?.imageUrl}
-                    imageAlt={editingFact?.imageAlt}
+                    description={editingFact?.factContent || ''}
+                    imageUrl={editingFact?.image?.base64}
+                    imageAlt={editingFact?.image?.imageDetails?.alt}
                     onSubmit={handleSubmit}
                 />
             </Modal>
