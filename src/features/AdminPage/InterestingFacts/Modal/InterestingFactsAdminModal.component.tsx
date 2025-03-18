@@ -33,18 +33,12 @@ const InterestingFactsAdminModal: FC<InterestingFactsAdminModalProps> = ({
             if (image) {
                 setImageUrl(base64ToUrl(image.base64, image.mimeType));
             } else {
-                imagesStore.fetchImage(imageId);
-                // Set up an interval to check if the image has been loaded
-                const interval = setInterval(() => {
+                Promise.all([imagesStore.fetchImage(imageId)]).then(() => {
                     const loadedImage = imagesStore.getImage(imageId);
                     if (loadedImage) {
                         setImageUrl(base64ToUrl(loadedImage.base64, loadedImage.mimeType));
-                        clearInterval(interval);
                     }
-                }, 100);
-
-                // Clean up interval after 5 seconds
-                setTimeout(() => clearInterval(interval), 5000);
+                });
             }
         }
     }, [imageId]);
