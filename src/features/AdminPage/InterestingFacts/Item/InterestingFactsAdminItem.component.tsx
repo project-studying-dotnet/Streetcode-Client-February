@@ -1,14 +1,24 @@
-import { FC, useState, useEffect } from 'react';
-import { Input, Form, Upload, message, Button } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { FC, useEffect, useRef, useState } from 'react';
+import { Form, Input, Button, message } from 'antd';
+import { UploadFile } from 'antd/lib/upload/interface';
 import './InterestingFactsAdminItem.styles.scss';
+
+import FileUploader from '@/app/common/components/FileUploader/FileUploader.component';
+import PreviewFileModal from '@/app/common/components/PreviewFileModal/PreviewFileModal.component';
+import Image from '@/models/media/image.model';
+import Audio from '@/models/media/audio.model';
 
 interface InterestingFactsAdminItemProps {
     title: string;
     description: string;
     imageUrl?: string;
     imageAlt?: string;
-    onSubmit: (values: { title: string; description: string; imageUrl?: string; imageAlt?: string }) => void;
+    onSubmit: (values: { 
+        title: string; 
+        description: string; 
+        imageId: number;
+        imageAlt?: string;
+    }) => void;
 }
 
 const MAX_TITLE_LENGTH = 68;
@@ -23,45 +33,47 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     onSubmit,
 }) => {
     const [form] = Form.useForm();
-    const [titleCount, setTitleCount] = useState(title.length);
-    const [descriptionCount, setDescriptionCount] = useState(description.length);
-    const [altCount, setAltCount] = useState(imageAlt?.length || 0);
-    const [submitting, setSubmitting] = useState(false);
+    const [previewOpen, setPreviewOpen] = useState(false);
+    const [filePreview, setFilePreview] = useState<UploadFile | null>(null);
+    const imageId = useRef<number>(0);
 
-    // Reset form when props change (new fact vs edit fact)
+    const handlePreview = (file: UploadFile) => {
+        setFilePreview(file);
+        setPreviewOpen(true);
+    };
+
     useEffect(() => {
         form.resetFields();
-        setTitleCount(title.length);
-        setDescriptionCount(description.length);
-        setAltCount(imageAlt?.length || 0);
+        form.setFieldsValue({
+            title,
+            description,
+            imageAlt,
+            logo: imageUrl ? [{
+                name: '',
+                thumbUrl: imageUrl,
+                uid: imageId.current.toString(),
+                status: 'done',
+            }] : [],
+        });
     }, [title, description, imageUrl, imageAlt, form]);
-
-    const handleImageUpload = (info: any) => {
-        if (info.file.status === 'done') {
-            message.success(`${info.file.name} file uploaded successfully`);
-            form.setFieldValue('imageUrl', info.file.response?.url || URL.createObjectURL(info.file.originFileObj));
-        } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
-        }
-    };
 
     const handleSubmit = async () => {
         try {
-            setSubmitting(true);
             const values = await form.validateFields();
-            onSubmit(values);
+            onSubmit({
+                title: values.title,
+                description: values.description,
+                imageId: imageId.current,
+                imageAlt: values.imageAlt,
+            });
         } catch (error: any) {
             if (error.errorFields) {
-                // Form validation error
                 const errorMessages = error.errorFields.map((field: any) => field.errors[0]);
                 message.error(errorMessages.join(', '));
             } else {
-                // Other errors
                 message.error('An error occurred while submitting the form');
                 console.error('Form submission error:', error);
             }
-        } finally {
-            setSubmitting(false);
         }
     };
 
@@ -69,7 +81,6 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
         <Form
             form={form}
             layout="vertical"
-            initialValues={{ title, description, imageUrl, imageAlt }}
             className="interesting-facts-form"
             preserve={false}
         >
@@ -80,12 +91,7 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             >
                 <Input
                     maxLength={MAX_TITLE_LENGTH}
-                    showCount={{
-                        formatter: ({ count }) => {
-                            setTitleCount(count);
-                            return `${MAX_TITLE_LENGTH - count} characters remaining`;
-                        },
-                    }}
+                    showCount
                 />
             </Form.Item>
 
@@ -96,38 +102,50 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             >
                 <Input.TextArea
                     maxLength={MAX_DESCRIPTION_LENGTH}
-                    showCount={{
-                        formatter: ({ count }) => {
-                            setDescriptionCount(count);
-                            return `${MAX_DESCRIPTION_LENGTH - count} characters remaining`;
-                        },
-                    }}
+                    showCount
                 />
             </Form.Item>
 
             <Form.Item
+                name="logo"
                 label="Image"
-                name="imageUrl"
+                valuePropName="fileList"
+                getValueFromEvent={(e: any) => {
+                    if (Array.isArray(e)) {
+                        return e;
+                    }
+                    return e?.fileList;
+                }}
                 rules={[{ required: true, message: 'Please upload an image!' }]}
             >
-                <Upload
-                    name="file"
-                    onChange={handleImageUpload}
+                <FileUploader
+                    className="logo-uploader"
+                    multiple={false}
+                    accept=".jpeg,.png,.jpg"
+                    listType="picture-card"
                     maxCount={1}
-                    listType="picture"
-                    customRequest={({ file, onSuccess }) => {
-                        // Temporary solution to handle file upload
-                        setTimeout(() => {
-                            onSuccess?.("ok");
-                        }, 0);
+                    onPreview={handlePreview}
+                    uploadTo="image"
+                    onSuccessUpload={(value: Image | Audio) => {
+                        if ('id' in value) {
+                            imageId.current = value.id;
+                        }
                     }}
+                    defaultFileList={
+                        imageUrl
+                            ? [
+                                {
+                                    name: '',
+                                    thumbUrl: imageUrl,
+                                    uid: imageId.current.toString(),
+                                    status: 'done',
+                                },
+                            ]
+                            : []
+                    }
                 >
-                    <Input
-                        type="button"
-                        value="Upload Image"
-                        prefix={<UploadOutlined />}
-                    />
-                </Upload>
+                    <p>Select or drag and drop file</p>
+                </FileUploader>
             </Form.Item>
 
             <Form.Item
@@ -136,21 +154,20 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             >
                 <Input
                     maxLength={MAX_ALT_LENGTH}
-                    showCount={{
-                        formatter: ({ count }) => {
-                            setAltCount(count);
-                            return `${MAX_ALT_LENGTH - count} characters remaining`;
-                        },
-                    }}
+                    showCount
                 />
             </Form.Item>
+
+            <PreviewFileModal
+                opened={previewOpen}
+                setOpened={setPreviewOpen}
+                file={filePreview}
+            />
 
             <Form.Item className="form-actions">
                 <Button 
                     type="primary" 
                     onClick={handleSubmit}
-                    loading={submitting}
-                    disabled={submitting}
                 >
                     {title ? 'Save Changes' : 'Add Fact'}
                 </Button>

@@ -130,8 +130,8 @@ const InterestingFactsAdminBlock: FC = () => {
                         >
                             {facts.map((fact, index) => (
                                 <Draggable
-                                    key={fact.id}
-                                    draggableId={fact.id.toString()}
+                                    key={fact.id || `fact-${index}`}
+                                    draggableId={(fact.id || `fact-${index}`).toString()}
                                     index={index}
                                 >
                                     {(provided) => (
