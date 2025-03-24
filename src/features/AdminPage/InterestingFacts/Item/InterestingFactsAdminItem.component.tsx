@@ -7,18 +7,16 @@ import FileUploader from '@/app/common/components/FileUploader/FileUploader.comp
 import PreviewFileModal from '@/app/common/components/PreviewFileModal/PreviewFileModal.component';
 import Image from '@/models/media/image.model';
 import Audio from '@/models/media/audio.model';
+import useMobx from '@/app/stores/root-store';
+import ImagesApi from '@/app/api/media/images.api';
+import { Fact, FactCreate } from '@/models/streetcode/text-contents.model';
 
 interface InterestingFactsAdminItemProps {
     title: string;
     description: string;
     imageUrl?: string;
     imageAlt?: string;
-    onSubmit: (values: { 
-        title: string; 
-        description: string; 
-        imageId: number;
-        imageAlt?: string;
-    }) => void;
+    onClose: () => void;
 }
 
 const MAX_TITLE_LENGTH = 68;
@@ -30,12 +28,13 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     description,
     imageUrl,
     imageAlt,
-    onSubmit,
+    onClose,
 }) => {
     const [form] = Form.useForm();
     const [previewOpen, setPreviewOpen] = useState(false);
     const [filePreview, setFilePreview] = useState<UploadFile | null>(null);
     const imageId = useRef<number>(0);
+    const { factsStore } = useMobx();
 
     const handlePreview = (file: UploadFile) => {
         setFilePreview(file);
@@ -60,20 +59,21 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     const handleSubmit = async () => {
         try {
             const values = await form.validateFields();
-            onSubmit({
-                title: values.title,
-                description: values.description,
+            const fact: FactCreate = {
+                id: 0,
+                title: values.title.trim(),
+                factContent: values.description.trim(),
                 imageId: imageId.current,
-                imageAlt: values.imageAlt,
-            });
-        } catch (error: any) {
-            if (error.errorFields) {
-                const errorMessages = error.errorFields.map((field: any) => field.errors[0]);
-                message.error(errorMessages.join(', '));
-            } else {
-                message.error('An error occurred while submitting the form');
-                console.error('Form submission error:', error);
-            }
+                imageDescription: values.imageAlt?.trim() || undefined,
+                streetcodeId: 2
+            };
+
+            await factsStore.createFact(fact);
+            message.success('Fact created successfully');
+            onClose();
+        } catch (error) {
+            message.error('Failed to create fact');
+            console.error('Fact creation error:', error);
         }
     };
 

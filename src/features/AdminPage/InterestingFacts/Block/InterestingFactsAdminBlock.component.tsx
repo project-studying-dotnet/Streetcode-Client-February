@@ -170,7 +170,7 @@ const InterestingFactsAdminBlock: FC = () => {
                     description={editingFact?.factContent || ''}
                     imageUrl={editingFact?.image?.base64}
                     imageAlt={editingFact?.image?.imageDetails?.alt}
-                    onSubmit={handleSubmit}
+                    onClose={handleModalClose}
                 />
             </Modal>
         </div>
