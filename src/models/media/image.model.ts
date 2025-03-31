@@ -19,6 +19,7 @@ export interface ImageCreate {
     baseFormat: string;
     mimeType: string;
     extension: string;
+    alt: string|null;
 }
 export interface ImageDetails {
     id: number;

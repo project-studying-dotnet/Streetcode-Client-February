@@ -52,7 +52,8 @@ const FileUploader:React.FC<Props> = ({ onSuccessUpload, uploadTo, children, ...
                                      extension: uplFile.name.substring(uplFile.name
                                          .lastIndexOf('.') + 1, uplFile.name.length),
                                      mimeType: uplFile.type!,
-                                     title: uplFile.name };
+                                     title: uplFile.name,
+                                     alt: null };
         return ImagesApi.create(image);
     };
     const customRequest = async (options:any) => {
