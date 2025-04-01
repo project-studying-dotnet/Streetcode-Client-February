@@ -119,4 +119,13 @@ export default class FactsStore {
             });
         } catch (error: unknown) { /* empty */ }
     };
+
+    public fetchAllFacts = async (): Promise<Fact[]> => {
+        try {
+            const facts = await factsApi.getAll();
+            this.setInternalMap(facts);
+            return facts;
+        } catch (error: unknown) {}
+        return Array<Fact>(0);
+    };
 }

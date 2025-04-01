@@ -1,5 +1,5 @@
-@use "@assets/sass/_utils.functions.scss" as *;
-@use "@assets/sass/mixins/_utils.mixins.scss" as mut;
+@use "../utils.functions" as *;
+@use "./_utils.mixins.scss" as mut;
 
 @mixin main-page-block-wrapper {
   width: 100%;

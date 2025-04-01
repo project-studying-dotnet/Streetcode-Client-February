@@ -13,9 +13,10 @@ export interface Fact {
 }
 export interface FactCreate extends Fact {
   imageDescription?: string
+  streetcodeId?: number;
 }
 export interface FactUpdate extends FactCreate, IModelState, IPersisted {
-    streetcodeId?: number;
+    
 }
 
 export interface Term {
