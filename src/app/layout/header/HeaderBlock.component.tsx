@@ -19,8 +19,10 @@ import { Button } from 'antd';
 
 import useWindowSize from '@/app/common/hooks/stateful/useWindowSize.hook';
 import { joinToStreetcodeClickEvent } from '@/app/common/utils/googleAnalytics.unility';
+import { useTranslation } from 'react-i18next';
 
 const HeaderBlock = () => {
+    const { t, i18n } = useTranslation();
     const [isHeaderHidden, setIsHeaderHidden] = useState(false);
     const { toggleState: isInputActive, handlers: { off, toggle } } = useToggle();
 
@@ -52,6 +54,11 @@ const HeaderBlock = () => {
         toggle();
     };
 
+    const switchLanguage = () => {
+        const newLang = i18n.language === 'en' ? 'uk' : 'en';
+        i18n.changeLanguage(newLang);
+    };
+
     return (
         <div className="HeaderBlock">
             <div className={`navBarContainer ${isHeaderHidden ? 'hiddenNavBar' : ''} ${isPageDimmed ? 'dim' : ''}`}>
@@ -62,7 +69,7 @@ const HeaderBlock = () => {
                             : <StreetcodeSvgMobile />}
                     </div>
                     <input
-                        placeholder="Пошук..."
+                        placeholder={t('headerBlock.searchPlaceholder')}
                         ref={inputRef}
                         className={`ant-input css-dev-only-do-not-override-26rdvq
                             hiddenHeaderInput ${((isInputActive && isHeaderHidden && windowSize.width > 1024) ? 'active' : '')}`}
@@ -86,6 +93,13 @@ const HeaderBlock = () => {
                                 style={isPageDimmed ? { zIndex: '-1' } : undefined}
                             />
                         )}
+                        <button
+                            onClick={switchLanguage}
+                            className="language-switcher"
+                            style={{ paddingRight: '16px' }}
+                        >
+                            {t('switchLanguage')}
+                        </button>
                         <HeaderDrawer />
                         <Button
                             type="primary"
@@ -96,7 +110,7 @@ const HeaderBlock = () => {
                             }}
                             style={isPageDimmed ? { zIndex: '-1' } : undefined}
                         >
-                            Долучитися
+                            {t('headerBlock.joinButton')}
                         </Button>
                     </div>
                 </div>
@@ -105,11 +119,11 @@ const HeaderBlock = () => {
                 <div className={`searchContainerMobile ${(isInputActive ? 'active' : '')}`}>
                     <input
                         className="ant-input css-dev-only-do-not-override-26rdvq"
-                        placeholder="Що ти шукаєш?"
+                        placeholder={t('headerBlock.mobileSearchPlaceholder')}
                         ref={inputRef}
                     />
                     <Button type="primary" className="searchButton">
-                    Пошук
+                        {t('headerBlock.searchButton')}
                     </Button>
                 </div>
             )}

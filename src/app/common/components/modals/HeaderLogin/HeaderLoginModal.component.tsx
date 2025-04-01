@@ -15,7 +15,10 @@ import {
     joinToStreetcodeClickEvent,
 } from '@/app/common/utils/googleAnalytics.unility';
 
+import { useTranslation } from 'react-i18next';
+
 const HeaderLoginModal = () => {
+    const { t } = useTranslation();
     const { modalStore: { setModal, modalsState: { login } } } = useModalContext();
     const navigate = useNavigate();
 
@@ -37,7 +40,7 @@ const HeaderLoginModal = () => {
         >
             <div className="loginModalContent">
                 <Button onClick={becomePartnerHandler}>
-                    Стати партнером
+                    {t('headerLoginModal.becomePartner')}
                 </Button>
                 <Button onClick={() => {
                     joinToStreetcodeClickEvent();
@@ -45,7 +48,7 @@ const HeaderLoginModal = () => {
                     login.isOpen = false;
                 }}
                 >
-                        Долучитися до команди
+                    {t('headerLoginModal.joinTeam')}
                 </Button>
                 <Button onClick={() => {
                     setModal('donates');
@@ -53,7 +56,7 @@ const HeaderLoginModal = () => {
                     donateEvent('header_modal');
                 }}
                 >
-                    Задонатити
+                    {t('headerLoginModal.donate')}
                 </Button>
             </div>
         </Modal>

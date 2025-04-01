@@ -10,6 +10,7 @@ import Audio from '@/models/media/audio.model';
 import useMobx from '@/app/stores/root-store';
 import ImagesApi from '@/app/api/media/images.api';
 import { Fact, FactCreate } from '@/models/streetcode/text-contents.model';
+import { useTranslation } from 'react-i18next';
 
 interface InterestingFactsAdminItemProps {
     title: string;
@@ -30,6 +31,7 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
     imageAlt,
     onClose,
 }) => {
+    const { t } = useTranslation();
     const [form] = Form.useForm();
     const [previewOpen, setPreviewOpen] = useState(false);
     const [filePreview, setFilePreview] = useState<UploadFile | null>(null);
@@ -69,10 +71,10 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             };
 
             await factsStore.createFact(fact);
-            message.success('Fact created successfully');
+            message.success(t('fact.createdSuccessfully'));
             onClose();
         } catch (error) {
-            message.error('Failed to create fact');
+            message.error(t('fact.creationFailed'));
             console.error('Fact creation error:', error);
         }
     };
@@ -85,9 +87,9 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             preserve={false}
         >
             <Form.Item
-                label="Title"
+                label={t('fact.title')}
                 name="title"
-                rules={[{ required: true, message: 'Please input the title!' }]}
+                rules={[{ required: true, message: t('fact.titleRequired') }]}
             >
                 <Input
                     maxLength={MAX_TITLE_LENGTH}
@@ -96,9 +98,9 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
             </Form.Item>
 
             <Form.Item
-                label="Description"
+                label={t('fact.description')}
                 name="description"
-                rules={[{ required: true, message: 'Please input the description!' }]}
+                rules={[{ required: true, message: t('fact.descriptionRequired') }]}
             >
                 <Input.TextArea
                     maxLength={MAX_DESCRIPTION_LENGTH}
@@ -108,7 +110,7 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
 
             <Form.Item
                 name="logo"
-                label="Image"
+                label={t('fact.image')}
                 valuePropName="fileList"
                 getValueFromEvent={(e: any) => {
                     if (Array.isArray(e)) {
@@ -116,7 +118,7 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
                     }
                     return e?.fileList;
                 }}
-                rules={[{ required: true, message: 'Please upload an image!' }]}
+                rules={[{ required: true, message: t('fact.imageRequired') }]}
             >
                 <FileUploader
                     className="logo-uploader"
@@ -144,12 +146,12 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
                             : []
                     }
                 >
-                    <p>Select or drag and drop file</p>
+                    <p>{t('fact.selectOrDragFile')}</p>
                 </FileUploader>
             </Form.Item>
 
             <Form.Item
-                label="Image Alt Text"
+                label={t('fact.imageAltText')}
                 name="imageAlt"
             >
                 <Input
@@ -169,11 +171,11 @@ const InterestingFactsAdminItem: FC<InterestingFactsAdminItemProps> = ({
                     type="primary" 
                     onClick={handleSubmit}
                 >
-                    {title ? 'Save Changes' : 'Add Fact'}
+                    {title ? t('fact.saveChanges') : t('fact.addFact')}
                 </Button>
             </Form.Item>
         </Form>
     );
 };
 
-export default InterestingFactsAdminItem; 
+export default InterestingFactsAdminItem;

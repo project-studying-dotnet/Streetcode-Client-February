@@ -1,5 +1,6 @@
 import './index.scss';
 import '@fonts/fonts.styles.scss';
+import './i18n'; // Import i18n configuration
 
 import React from 'react';
 import ReactDOM from 'react-dom/client';

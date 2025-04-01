@@ -1,0 +1,83 @@
+{
+  "welcome": "Welcome",
+  "donate": "Donate",
+  "mainPage": {
+    "catalogBlockName": "Want more streetcodes?",
+    "catalogBlockContent": "Don't limit your knowledge of the past to boring textbooks from the past. Go to the streetcodes page about figures and events, read or listen to historical and fascinating stories.",
+    "catalogButtonName": "To streetcodes",
+    "supportBlockName": "Everyone leaves a mark in history. You can leave yours",
+    "supportBlockContent": "Support the project about history in street names. Choose a convenient way to donate that will highlight history in urban spaces. Our project lives and thrives thanks to caring streetcoders like you!",
+    "supportButtonName": "Donate"
+  },
+  "streetcodeSliderItem": {
+    "toStreetcode": "To streetcode"
+  },
+  "teamComponent": {
+    "teamHeading": "Team",
+    "fullTeamButton": "Full Team"
+  },
+  "partnersBlockMain": {
+    "partnersHeading": "Our Partners"
+  },
+  "headerBlock": {
+    "searchPlaceholder": "Search...",
+    "mobileSearchPlaceholder": "What are you looking for?",
+    "searchButton": "Search",
+    "joinButton": "Join"
+  },
+  "headerLoginModal": {
+    "becomePartner": "Become a Partner",
+    "joinTeam": "Join the Team",
+    "donate": "Donate"
+  },
+  "headerDrawer": {
+    "home": "Home",
+    "streetcodes": "Streetcodes",
+    "adminPanel": "Admin Panel",
+    "partners": "Partners",
+    "donations": "Donations",
+    "contacts": "Contacts",
+    "privacyPolicy": "Privacy Policy",
+    "feedback": "Feedback"
+  },
+  "adminBar": {
+    "forFans": "For Fans",
+    "partners": "Partners",
+    "team": "Team",
+    "wowFacts": "Wow-Facts"
+  },
+  "interestingFactsAdminBlock": {
+    "header": "Interesting Facts",
+    "addButton": "Add New Fact",
+    "editModalTitle": "Edit Fact",
+    "addModalTitle": "Add New Fact",
+    "fetchError": "Failed to fetch facts",
+    "deleteSuccess": "Fact deleted successfully",
+    "deleteError": "Failed to delete fact",
+    "updateSuccess": "Fact updated successfully",
+    "updateError": "Failed to update fact",
+    "createSuccess": "Fact created successfully",
+    "createError": "Failed to create fact"
+  },
+  "fact": {
+    "title": "Title",
+    "titleRequired": "Please input the title!",
+    "description": "Description",
+    "descriptionRequired": "Please input the description!",
+    "image": "Image",
+    "imageRequired": "Please upload an image!",
+    "imageAltText": "Image Alt Text",
+    "selectOrDragFile": "Select or drag and drop file",
+    "saveChanges": "Save Changes",
+    "addFact": "Add Fact",
+    "createdSuccessfully": "Fact created successfully",
+    "creationFailed": "Failed to create fact"
+  },
+  "partnersPage": {
+    "subtitle": "Does our project resonate with you or your company? We shake hands in advance and dream of mutual involvement. Join us!",
+    "content": "Social missionaries striving for a better Ukraine. Unbreakable Ukraine-centric individuals who, together with the project, build cool communities of patriots and connoisseurs of Ukrainian history. Professionals and experts who share their expertise with us here and now. In IT, law, publishing, and management. Donors and sponsors whose contributions keep the project alive and make history speak in urban spaces. All these sincere and kind people, cool and effective companies, are our partners and true friends who share our values.",
+    "subTitle": "We are grateful to everyone. We stand by everyone. Because we streetcode together!",
+    "logoAlt": "logo"
+  },
+  "switchLanguage": "Switch Language"
+}

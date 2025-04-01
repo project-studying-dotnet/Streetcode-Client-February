@@ -3,6 +3,7 @@ import './StreetcodeSliderItem.styles.scss';
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import useMobx from '@stores/root-store';
+import { useTranslation } from 'react-i18next';
 
 import ImagesApi from '@/app/api/media/images.api';
 import useOnScreen from '@/app/common/hooks/scrolling/useOnScreen.hook';
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const StreetcodeSliderItem = ({ streetcode }: Props) => {
+    const { t } = useTranslation();
     const { imagesStore } = useMobx();
     const [image, setImage] = useState<Image>();
 
@@ -76,7 +78,7 @@ const StreetcodeSliderItem = ({ streetcode }: Props) => {
                             </div>
                             <div>
                                 <a className="streetcodeLink" href={streetcode.transliterationUrl} onClick={handleLinkClick}>
-                                    До стріткоду
+                                    {t('streetcodeSliderItem.toStreetcode')}
                                 </a>
                             </div>
                         </div>
