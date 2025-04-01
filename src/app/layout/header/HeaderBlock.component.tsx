@@ -22,7 +22,7 @@ import { joinToStreetcodeClickEvent } from '@/app/common/utils/googleAnalytics.u
 import { useTranslation } from 'react-i18next';
 
 const HeaderBlock = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [isHeaderHidden, setIsHeaderHidden] = useState(false);
     const { toggleState: isInputActive, handlers: { off, toggle } } = useToggle();
 
@@ -52,6 +52,11 @@ const HeaderBlock = () => {
     const onMagnifyingGlassClick = () => {
         setIsPageDimmed();
         toggle();
+    };
+
+    const switchLanguage = () => {
+        const newLang = i18n.language === 'en' ? 'uk' : 'en';
+        i18n.changeLanguage(newLang);
     };
 
     return (
@@ -88,6 +93,13 @@ const HeaderBlock = () => {
                                 style={isPageDimmed ? { zIndex: '-1' } : undefined}
                             />
                         )}
+                        <button
+                            onClick={switchLanguage}
+                            className="language-switcher"
+                            style={{ paddingRight: '16px' }}
+                        >
+                            {t('switchLanguage')}
+                        </button>
                         <HeaderDrawer />
                         <Button
                             type="primary"

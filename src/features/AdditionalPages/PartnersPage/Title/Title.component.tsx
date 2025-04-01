@@ -1,22 +1,22 @@
 import './Title.styles.scss';
+import { useTranslation } from 'react-i18next';
 
 import Logo from '@images/partners/logo_white.png';
 
-const Title = () => (
-    <div className="titleContainer">
-        <div className="titleSmall">Партнери</div>
-        <div className="titleBig">Партнери</div>
-        <div className="content">
-            <img className="logo" src={Logo} alt="лого" />
-            Соціальні місіонери, які прагнуть кращої України. Незламні україноцентристи,
-            які разом з проєктом будують круті ком’юніті патріотів та знавців української історії.
-            Профі та експерти, які діляться власною експертизою з нами тут і зараз. В IT, юриспруденції,
-            видавничій справі, менеджменті. Донатори та спонсори, завдяки внескам яких проєкт пульсує,
-            а історія вже промовляє в міських просторах. Всі ці щирі та добрі люди, круті та ефективні
-            компанії – наші партнери і справжні друзі, які розділяють наші цінності.
+const Title = () => {
+    const { t } = useTranslation();
+
+    return (
+        <div className="titleContainer">
+            <div className="titleSmall">{t('partnersBlockMain.partnersHeading')}</div>
+            <div className="titleBig">{t('partnersBlockMain.partnersHeading')}</div>
+            <div className="content">
+                <img className="logo" src={Logo} alt={t('partnersPage.logoAlt')} />
+                {t('partnersPage.content')}
+            </div>
+            <div className="subTitle">{t('partnersPage.subTitle')}</div>
         </div>
-        <div className="subTitle">Ми вдячні кожному. Ми поруч з кожним. Бо стріткодимо разом!</div>
-    </div>
-);
+    );
+};
 
 export default Title;

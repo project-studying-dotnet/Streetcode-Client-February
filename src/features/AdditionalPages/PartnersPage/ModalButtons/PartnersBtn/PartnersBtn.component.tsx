@@ -1,10 +1,11 @@
 import { useModalContext } from '@/app/stores/root-store';
 import './PartnersBtn.styles.scss';
-
+import { useTranslation } from 'react-i18next';
 
 import { becomePartnerEvent } from '@/app/common/utils/googleAnalytics.unility';
 
 const PartnersBtn = () => {
+    const { t } = useTranslation();
     const { modalStore: { setModal } } = useModalContext();
     const onBtnClick = () => {
         setModal('partners');
@@ -14,7 +15,7 @@ const PartnersBtn = () => {
 
     return (
         <button className='button-sized partner-button' onClick={onBtnClick}>
-            Стати партнером
+            {t('headerLoginModal.becomePartner')}
         </button>
     );
 };

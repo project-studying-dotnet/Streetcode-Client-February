@@ -72,5 +72,12 @@
     "addFact": "Add Fact",
     "createdSuccessfully": "Fact created successfully",
     "creationFailed": "Failed to create fact"
-  }
+  },
+  "partnersPage": {
+    "subtitle": "Does our project resonate with you or your company? We shake hands in advance and dream of mutual involvement. Join us!",
+    "content": "Social missionaries striving for a better Ukraine. Unbreakable Ukraine-centric individuals who, together with the project, build cool communities of patriots and connoisseurs of Ukrainian history. Professionals and experts who share their expertise with us here and now. In IT, law, publishing, and management. Donors and sponsors whose contributions keep the project alive and make history speak in urban spaces. All these sincere and kind people, cool and effective companies, are our partners and true friends who share our values.",
+    "subTitle": "We are grateful to everyone. We stand by everyone. Because we streetcode together!",
+    "logoAlt": "logo"
+  },
+  "switchLanguage": "Switch Language"
 }
