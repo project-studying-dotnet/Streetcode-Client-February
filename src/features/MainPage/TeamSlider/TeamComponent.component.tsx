@@ -1,4 +1,5 @@
 import './TeamComponent.styles.scss';
+import { useTranslation } from 'react-i18next';
 
 import TeamApi from '@/app/api/team/team.api';
 import TeamMember from '@/models/team/team.model';
@@ -8,7 +9,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import { useState, useEffect } from 'react';
 import SlickSlider from './../../SlickSlider/SlickSlider.component'
 import Heading from '../Heading/Heading.component';
+
 const TeamComponent = () => {
+    const { t } = useTranslation();
     const [team, setTeam] = useState<TeamMember[]>([]);
 
     useEffect(() => {
@@ -41,7 +44,7 @@ const TeamComponent = () => {
             (team.length > 0)
             ? (
             <div id="mainBlock" className="teamComponent">
-                <Heading blockName='Команда' buttonName='Вся команда' setActionOnClick={handleClick}/>
+                <Heading blockName={t('teamComponent.teamHeading')} buttonName={t('teamComponent.fullTeamButton')} setActionOnClick={handleClick}/>
                 <div className="mainContainer">
                     <div className="blockCentering">
                         <div className="mainContent">

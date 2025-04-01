@@ -15,6 +15,7 @@ import FRONTEND_ROUTES from '@/app/common/constants/frontend-routes.constants';
 import HeaderDrawerItem from '@/app/layout/header/HeaderDrawer/HeaderDrawerItem/HeaderDrawerItem.component';
 
 import SocialMediaLinks from './SocialMediaLinks/SocialMediaLinks.component';
+import { useTranslation } from 'react-i18next';
 
 const mobileOptions = 8;
 const desktopOptions = 6;
@@ -42,6 +43,7 @@ const menuOptions = [
 ];
 
 const HeaderDrawer = () => {
+    const { t } = useTranslation();
     const { toggleState: drawerState, handlers: { toggle } } = useToggle();
     const [active, setActive] = useState(1);
     const [options, setOptions] = useState(desktopOptions);
@@ -91,42 +93,42 @@ const HeaderDrawer = () => {
                             <HeaderDrawerItem
                                 id={1}
                                 parentActive={active}
-                                text="Головна"
+                                text={t('headerDrawer.home')}
                                 link={FRONTEND_ROUTES.BASE}
                                 toggleState={toggle}
                             />
                             <HeaderDrawerItem
                                 id={2}
                                 parentActive={active}
-                                text="Стріткоди"
+                                text={t('headerDrawer.streetcodes')}
                                 link={FRONTEND_ROUTES.OTHER_PAGES.CATALOG}
                                 toggleState={toggle}
                             />
                             <HeaderDrawerItem
                                 id={3}
                                 parentActive={active}
-                                text="Адмін-панель"
+                                text={t('headerDrawer.adminPanel')}
                                 link={FRONTEND_ROUTES.ADMIN.BASE}
                                 toggleState={toggle}
                             />
                             <HeaderDrawerItem
                                 id={4}
                                 parentActive={active}
-                                text="Партнери"
+                                text={t('headerDrawer.partners')}
                                 link={FRONTEND_ROUTES.OTHER_PAGES.PARTNERS}
                                 toggleState={toggle}
                             />
                             <HeaderDrawerItem
                                 id={5}
                                 parentActive={active}
-                                text="Донати"
+                                text={t('headerDrawer.donations')}
                                 link={FRONTEND_ROUTES.OTHER_PAGES.SUPPORT_US}
                                 toggleState={toggle}
                             />
                             <HeaderDrawerItem
                                 id={6}
                                 parentActive={active}
-                                text="Контакти"
+                                text={t('headerDrawer.contacts')}
                                 link={FRONTEND_ROUTES.OTHER_PAGES.CONTACT_US}
                                 toggleState={toggle}
                             />
@@ -140,14 +142,14 @@ const HeaderDrawer = () => {
                                         id={7}
                                         parentActive={active}
                                         toggleState={toggle}
-                                        text="Політика конфіденційності"
+                                        text={t('headerDrawer.privacyPolicy')}
                                         link={FRONTEND_ROUTES.OTHER_PAGES.PRIVACY_POLICY}
                                     />
                                     <HeaderDrawerItem
                                         id={8}
                                         parentActive={active}
                                         toggleState={toggle}
-                                        text="Зворотний зв'язок"
+                                        text={t('headerDrawer.feedback')}
                                         link={FRONTEND_ROUTES.OTHER_PAGES.ERROR404}
                                     />
                                 </div>

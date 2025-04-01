@@ -2,6 +2,7 @@ import { FC, useState, useEffect } from 'react';
 import { Button, Modal, message } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { DragDropContext, Draggable } from 'react-beautiful-dnd';
+import { useTranslation } from 'react-i18next';
 import InterestingFactsAdminModal from '../Modal/InterestingFactsAdminModal.component';
 import InterestingFactsAdminItem from '../Item/InterestingFactsAdminItem.component';
 import StrictModeDroppable from '@/app/common/components/StrictModeDroppable';
@@ -17,6 +18,7 @@ interface InterestingFactsAdminItemValues {
 }
 
 const InterestingFactsAdminBlock: FC = () => {
+    const { t } = useTranslation();
     const { factsStore } = useMobx();
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingFact, setEditingFact] = useState<Fact | null>(null);
@@ -28,7 +30,7 @@ const InterestingFactsAdminBlock: FC = () => {
             try {
                 await factsStore.fetchAllFacts();
             } catch (error) {
-                message.error('Failed to fetch facts');
+                message.error(t('interestingFactsAdminBlock.fetchError'));
             } finally {
                 setLoading(false);
             }
@@ -68,9 +70,9 @@ const InterestingFactsAdminBlock: FC = () => {
     const handleDelete = async (id: number) => {
         try {
             await factsStore.deleteFact(id);
-            message.success('Fact deleted successfully');
+            message.success(t('interestingFactsAdminBlock.deleteSuccess'));
         } catch (error) {
-            message.error('Failed to delete fact');
+            message.error(t('interestingFactsAdminBlock.deleteError'));
         }
     };
 
@@ -88,15 +90,15 @@ const InterestingFactsAdminBlock: FC = () => {
             const factData = transformValuesToFact(values);
             if (editingFact) {
                 await factsStore.updateFact({ ...editingFact, ...factData });
-                message.success('Fact updated successfully');
+                message.success(t('interestingFactsAdminBlock.updateSuccess'));
             } else {
                 factsStore.addFact(factData as Fact);
-                message.success('Fact created successfully');
+                message.success(t('interestingFactsAdminBlock.createSuccess'));
             }
             setIsModalVisible(false);
             setEditingFact(null);
         } catch (error) {
-            message.error(editingFact ? 'Failed to update fact' : 'Failed to create fact');
+            message.error(editingFact ? t('interestingFactsAdminBlock.updateError') : t('interestingFactsAdminBlock.createError'));
         }
     };
 
@@ -110,13 +112,13 @@ const InterestingFactsAdminBlock: FC = () => {
     return (
         <div className="interesting-facts-admin-block">
             <div className="interesting-facts-header">
-                <h2>Interesting Facts</h2>
+                <h2>{t('interestingFactsAdminBlock.header')}</h2>
                 <Button
                     type="primary"
                     icon={<PlusOutlined />}
                     onClick={handleAdd}
                 >
-                    Add New Fact
+                    {t('interestingFactsAdminBlock.addButton')}
                 </Button>
             </div>
 
@@ -159,7 +161,7 @@ const InterestingFactsAdminBlock: FC = () => {
             </DragDropContext>
 
             <Modal
-                title={editingFact ? "Edit Fact" : "Add New Fact"}
+                title={editingFact ? t('interestingFactsAdminBlock.editModalTitle') : t('interestingFactsAdminBlock.addModalTitle')}
                 open={isModalVisible}
                 onCancel={handleModalClose}
                 footer={null}
@@ -177,4 +179,4 @@ const InterestingFactsAdminBlock: FC = () => {
     );
 };
 
-export default InterestingFactsAdminBlock; 
+export default InterestingFactsAdminBlock;
